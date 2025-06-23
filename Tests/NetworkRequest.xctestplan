@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "5B29B9BF-7B14-461F-A3B1-3FBD59ADBEB5",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SwiftNetworkRequestTests",
+        "name" : "SwiftNetworkRequestTests"
+      }
+    }
+  ],
+  "version" : 1
+}

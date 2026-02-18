@@ -14,13 +14,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  macos-15:
-    name: macOS 15
-    runs-on: macos-15
+  build-and-test:
+    name: ${{ matrix.runner }} / Xcode ${{ matrix.xcode }} / ${{ matrix.config }}
+    runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
         config: ['debug', 'release']
         xcode: ['16.4', '26.0.1']
+        include:
+          - xcode: '16.4'
+            runner: macos-15
+            ios_simulator_name: iPhone 16 Pro
+            ios_simulator_os: '18.6'
+            watchos_simulator_name: Apple Watch Series 10 (42mm)
+            watchos_simulator_os: '11.5'
+          - xcode: '26.0.1'
+            runner: macos-26
+            ios_simulator_name: iPhone 17 Pro
+            ios_simulator_os: '26.0.1'
+            watchos_simulator_name: Apple Watch Series 11 (46mm)
+            watchos_simulator_os: '26.0'
+    env:
+      IOS_SIMULATOR_NAME: ${{ matrix.ios_simulator_name }}
+      IOS_SIMULATOR_OS: ${{ matrix.ios_simulator_os }}
+      WATCHOS_SIMULATOR_NAME: ${{ matrix.watchos_simulator_name }}
+      WATCHOS_SIMULATOR_OS: ${{ matrix.watchos_simulator_os }}
     steps:
       - uses: actions/checkout@v4
       - name: Select Xcode ${{ matrix.xcode }}

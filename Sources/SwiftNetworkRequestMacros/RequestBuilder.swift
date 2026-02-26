@@ -386,17 +386,6 @@ private extension RequestBuilder {
         }
     }
     
-    func isModuleImported(name: String, in context: some MacroExpansionContext) -> Bool {
-        guard let sourceFile = context.lexicalContext.first?.root.as(SourceFileSyntax.self)
-        else { return true }
-        
-        let importDecl = sourceFile.statements.compactMap { $0.item.as(ImportDeclSyntax.self) }.first
-        guard let importDecl else { return false }
-        
-        
-        return importDecl.path.contains { $0.name.text == name }
-    }
-    
     func generateMethodSignature(methodArguments: String?) -> String {
         if let methodArguments, !methodArguments.isEmpty {
             """

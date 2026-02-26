@@ -1,8 +1,12 @@
 CONFIG = debug
-PLATFORM_IOS = iOS Simulator,name=iPhone 16 Pro
+IOS_SIMULATOR_NAME ?= iPhone 16 Pro
+IOS_SIMULATOR_OS ?= latest
+WATCHOS_SIMULATOR_NAME ?= Apple Watch Series 10 (42mm)
+WATCHOS_SIMULATOR_OS ?= 11.0
+PLATFORM_IOS = iOS Simulator,name=$(IOS_SIMULATOR_NAME),OS=$(IOS_SIMULATOR_OS)
 PLATFORM_MAC = macOS
 PLATFORM_MAC_CATALYST = macOS,variant=Mac Catalyst
-PLATFORM_WATCHOS = watchOS Simulator,name=Apple Watch Series 10 (42mm),OS=11.0
+PLATFORM_WATCHOS = watchOS Simulator,name=$(WATCHOS_SIMULATOR_NAME),OS=$(WATCHOS_SIMULATOR_OS)
 
 build-all-platforms:
 	for platform in \
@@ -19,12 +23,9 @@ build-all-platforms:
 	done;
 
 build-for-library-evolution:
-	swift build \
+	LIBRARY_EVOLUTION=1 swift build \
 		-c release \
-		--target SwiftNetworkRequest \
-		-Xswiftc -emit-module-interface \
-		-Xswiftc -enable-library-evolution \
-		-Xswiftc -DRESILIENT_LIBRARIES
+		--target SwiftNetworkRequest
 
 test:
 	swift test
@@ -33,4 +34,3 @@ test-exampleApp:
 	xcrun xcodebuild test \
 		-scheme "NetworkRequestExample" \
 		-destination platform="$(PLATFORM_IOS)" || exit 1; \
- 

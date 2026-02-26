@@ -10,3 +10,5 @@ DerivedData/
 Package.resolved
 .xcodeproj/
 docs/
+CLAUDE.md
+.claude

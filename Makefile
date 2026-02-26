@@ -23,12 +23,9 @@ build-all-platforms:
 	done;
 
 build-for-library-evolution:
-	swift build \
+	LIBRARY_EVOLUTION=1 swift build \
 		-c release \
-		--target SwiftNetworkRequest \
-		-Xswiftc -emit-module-interface \
-		-Xswiftc -enable-library-evolution \
-		-Xswiftc -DRESILIENT_LIBRARIES
+		--target SwiftNetworkRequest
 
 test:
 	swift test
